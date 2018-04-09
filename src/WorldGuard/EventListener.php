@@ -95,7 +95,7 @@ class EventListener implements Listener {
 
                 if ($reg->getFlag("potions") === "false") {
                     if (in_array($event->getItem()->getId(), self::POTIONS)) {
-                        $player->sendMessage(TF::RED.'You cannot use '.$event->getItem()->getName().' in this area.');
+                        $player->sendMessage(TF::RED.'§2You cannot use §3'.$event->getItem()->getName().' §2in this area.');
                         $event->setCancelled();
                         return;
                     }
@@ -103,7 +103,7 @@ class EventListener implements Listener {
 
                 if ($reg->getFlag("editable") === "false") {
                     if (in_array($event->getItem()->getId(), self::OTHER)) {
-                        $player->sendMessage(TF::RED.'You cannot use '.$event->getItem()->getName().'.');
+                        $player->sendMessage(TF::RED.'§2You cannot use §3'.$event->getItem()->getName().'§2in this area.');
                         $event->setCancelled();
                         return;
                     }
@@ -123,7 +123,7 @@ class EventListener implements Listener {
         if (($region = $this->plugin->getRegionFromPosition($event->getBlock())) !== "") {
             if (!$region->isWhitelisted($player = $event->getPlayer())) {
                 if ($region->getFlag("editable") === "false") {
-                    $player->sendMessage(TF::RED.'You cannot place blocks in this region.');
+                    $player->sendMessage(TF::RED.'§2You cannot edit this area.');
                     $event->setCancelled();
                 }
             }
@@ -139,7 +139,7 @@ class EventListener implements Listener {
         if (($region = $this->plugin->getRegionFromPosition($event->getBlock())) !== "") {
             if (!$region->isWhitelisted($player = $event->getPlayer())) {
                 if ($region->getFlag("editable") === "false") {
-                    $player->sendMessage(TF::RED.'You cannot break blocks in this region.');
+                    $player->sendMessage(TF::RED.'§2You cannot edit this area.');
                     $event->setCancelled();
                 }
             }
@@ -167,7 +167,7 @@ class EventListener implements Listener {
         if ($event->getEntity() instanceof Player && $event instanceof EntityDamageByEntityEvent) {
             if (($reg = $this->plugin->getRegionByPlayer($event->getEntity())) !== "") {
                 if ($reg->getFlag("pvp") === "false" && $event->getDamager() instanceof Player) {
-                    $event->getDamager()->sendMessage(TF::RED.'You cannot hurt players in this region.');
+                    $event->getDamager()->sendMessage(TF::RED.'§2You cannot PvP in this area.');
                     $event->setCancelled();
                 }
             }
@@ -183,7 +183,7 @@ class EventListener implements Listener {
         $cmd = explode(" ", $event->getMessage())[0];
         if (substr($cmd, 0, 1) === '/') {
             if (($region = $this->plugin->getRegionByPlayer($player = $event->getPlayer())) !== "" && !$region->isCommandAllowed($cmd)) {
-                $player->sendMessage(TF::RED.'You cannot use '.$cmd.' in this area.');
+                $player->sendMessage(TF::RED.'§2You cannot use §3'.$cmd.' §2in this area.');
                 $event->setCancelled();
             }
         }
@@ -198,7 +198,7 @@ class EventListener implements Listener {
         if (($reg = $this->plugin->getRegionByPlayer($player = $event->getPlayer())) !== "") {
             if (!$reg->isWhitelisted($player)) {
                 if ($reg->getFlag("item-drop") === "false") {
-                    $player->sendMessage(TF::RED.'You cannot drop items in this region.');
+                    $player->sendMessage(TF::RED.'§2You cannot drop items in this region.');
                     $event->setCancelled();
                     return;
                 }
@@ -246,7 +246,7 @@ class EventListener implements Listener {
         if (($reg = $this->plugin->getRegionByPlayer($player = $event->getPlayer())) !== "") {
             if (!$reg->isWhitelisted($player)) {
                 if ($reg->getFlag("send-chat") === "false") {
-                    $player->sendMessage(TF::RED.'You cannot chat in this region.');
+                    $player->sendMessage(TF::RED.'§2You cannot chat in this region.');
                     $event->setCancelled();
                     return;
                 }
@@ -272,7 +272,7 @@ class EventListener implements Listener {
             if ($region->getFlag("enderpearl") === "false") {
                 if ((($player = $entity->shootingEntity) !== null) && !$region->isWhitelisted($player)) {
                     $event->setCancelled();
-                    $player->sendMessage(TF::RED.'You cannot use ender pearls in this area.');
+                    $player->sendMessage(TF::RED.'§2You cannot use ender pearls in this area.');
                 }
             }
         }
