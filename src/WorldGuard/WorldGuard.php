@@ -189,7 +189,7 @@ class WorldGuard extends PluginBase {
 
         if ($old !== "") {
             if ($old->getFlag("allowed-leave") === "false") {
-                $player->sendPopup(TF::RED.'You cannot leave this area.');
+                $player->sendPopup(TF::RED.'§2You cannot leave this area.');
                 return false;
             }
             if (($msg = $old->getFlag("notify-leave")) !== "") {
@@ -216,7 +216,7 @@ class WorldGuard extends PluginBase {
 
         if ($new !== "") {
             if ($new->getFlag("allowed-enter") === "false") {
-                $player->sendPopup(TF::RED.'You cannot enter this area.');
+                $player->sendPopup(TF::RED.'§2You cannot enter this area.');
                 return false;
             }
             if (!$new->isWhitelisted($player)) {
@@ -285,42 +285,42 @@ class WorldGuard extends PluginBase {
         switch (strtolower($cmd->getName())) {
             case "region":
                 if (!$issuer->hasPermission("worldguard.create") || !$issuer->hasPermission("worldguard.modify") || !$issuer->hasPermission("worldguard.delete")) {
-                    $issuer->sendMessage("You do not have permission to use this command.");
+                    $issuer->sendMessage("§cYou do not have permission to use this command.");
                     return false;
                 }
                 if (isset($args[0])) {
                     switch ($args[0]) {
                         case "create":
                             if (!$issuer->hasPermission("worldguard.create")) {
-                                $issuer->sendMessage("You do not have permission to use this command.");
+                                $issuer->sendMessage("§cYou do not have permission to use this command.");
                                 return false;
                             }
                             if (isset($args[1])) {
                                 if (!ctype_alnum($args[1])) {
-                                    $issuer->sendMessage(TF::RED.'Region name must be alpha numeric.');
+                                    $issuer->sendMessage(TF::RED.'§2Region name must be alpha numeric.');
                                     return false;
                                 }
                                 if ($this->regionExists($args[1])) {
-                                    $issuer->sendMessage(TF::RED.'This region already exists. Remap it using /region remap '.$args[1].', or remove it using /region remove '.$args[1]);
+                                    $issuer->sendMessage(TF::RED.'§2This region already exists. Remap it using /region remap '.$args[1].', or remove it using /region remove '.$args[1]);
                                     return false;
                                 } else {
                                     unset($this->creating[$id = $issuer->getRawUniqueId()], $this->process[$id]);
                                     $this->creating[$id] = [];
                                     $this->process[$id]= $args[1];
-                                    $issuer->sendMessage(TF::LIGHT_PURPLE.'Select two positions to complete creating your region ('.$args[1].').');
+                                    $issuer->sendMessage(TF::LIGHT_PURPLE.'§2Select two positions to complete creating your region ('.$args[1].').');
                                 }
                             } else {
-                                $issuer->sendMessage(TF::RED.'/region create <name>');
+                                $issuer->sendMessage(TF::RED.'§bPlease use: §a/region create <name>');
                             }
                             break;
                         case "delete":
                             if (!$issuer->hasPermission("worldguard.delete")) {
-                                $issuer->sendMessage("You do not have permission to use this command.");
+                                $issuer->sendMessage("§cYou do not have permission to use this command.");
                                 return false;
                             }
                             if (isset($args[1])) {
                                 if (!ctype_alnum($args[1])) {
-                                    $issuer->sendMessage(TF::RED.'Region name must be alpha numeric.');
+                                    $issuer->sendMessage(TF::RED.'§2Region name must be alpha numeric.');
                                     return false;
                                 }
                                 if ($this->regionExists($args[1])) {
@@ -328,18 +328,18 @@ class WorldGuard extends PluginBase {
                                     foreach ($this->getServer()->getOnlinePlayers() as $player) {
                                         $this->updateRegion($player);
                                     }
-                                    $issuer->sendMessage(TF::YELLOW.'You have deleted the region: '.$args[1]);
+                                    $issuer->sendMessage(TF::YELLOW.'§dYou have deleted the region:§5 '.$args[1]);
                                 } else {
-                                    $issuer->sendMessage(TF::RED.$args[1].' region does not exist. Use /region list to get a list of all regions.');
+                                    $issuer->sendMessage(TF::RED.$args[1].' §2region does not exist. Use /region list to get a list of all regions.');
                                 }
                             } else {
-                                $issuer->sendMessage(TF::RED.'/region delete <name>');
+                                $issuer->sendMessage(TF::RED.'§bPlease use: §a/region delete <name>');
                             }
                             break;
                         case "list":
                             $msg = TF::LIGHT_PURPLE."Regions: \n".TF::LIGHT_PURPLE;
                             if (empty($this->regions)) {
-                                $msg .= "You haven't created any region yet. Use /region create <name> to create your first region.";
+                                $msg .= "§2You haven't created any region yet. §bUse §a/region create <name> to create your first region.";
                             } else {
                                 $msg .= implode(TF::WHITE.', '.TF::LIGHT_PURPLE, array_keys($this->regions));
                             }
@@ -350,45 +350,45 @@ class WorldGuard extends PluginBase {
                                 if (($player = $this->getServer()->getPlayerExact($args[1])) !== null) {
                                     $reg = $this->getRegionOf($player);
                                     if ($reg !== "") {
-                                        $issuer->sendMessage(TF::YELLOW.$player->getName().' is in '.$reg.'.');
+                                        $issuer->sendMessage(TF::YELLOW.$player->getName().' §6is in '.$reg.'.');
                                     } else {
-                                        $issuer->sendMessage(TF::YELLOW.$player->getName().'is not in any region.');
+                                        $issuer->sendMessage(TF::YELLOW.$player->getName().'§2is not in any region.');
                                     }
                                 } else {
-                                    $issuer->sendMessage(TF::RED.$args[1].' is offline.');
+                                    $issuer->sendMessage(TF::RED.$args[1].' §2is offline.');
                                 }
                             } else {
-                                $issuer->sendMessage(TF::RED.'/region getplayer <player>');
+                                $issuer->sendMessage(TF::RED.'§bPlease use: §a/region getplayer <player>');
                             }
                             break;
                         case "flag":
                         case "flags":
                             if (!$issuer->hasPermission("worldguard.modify")) {
-                                $issuer->sendMessage("You do not have permission to use this command.");
+                                $issuer->sendMessage("§cYou do not have permission to use this command.");
                                 return false;
                             }
                             if (isset($args[1], $args[2])) {
                                 if (!$this->regionExists($args[2])) {
-                                    $issuer->sendMessage(TF::RED.'The specified region does not exist. Use /region list to get a list of all regions.');
+                                    $issuer->sendMessage(TF::RED.'§2The specified region does not exist. Use /region list to get a list of all regions.');
                                     return false;
                                 }
                                 if ($args[1] !== "get") {
                                     if (!isset($args[3])) {
-                                        $issuer->sendMessage(TF::RED."You haven't specified the <flag>.");
+                                        $issuer->sendMessage(TF::RED."§2You haven't specified the <flag>.");
                                         return false;
                                     } elseif (!$this->flagExists($args[3])) {
-                                        $issuer->sendMessage(TF::RED."The specified flag does not exist. Available flags:\n".TF::LIGHT_PURPLE.implode(TF::WHITE.', '.TF::LIGHT_PURPLE, array_keys(self::FLAGS)));
+                                        $issuer->sendMessage(TF::RED."§2The specified flag does not exist. Available flags:\n".TF::LIGHT_PURPLE.implode(TF::WHITE.', '.TF::LIGHT_PURPLE, array_keys(self::FLAGS)));
                                         return false;
                                     }
                                 }
                                 switch ($args[1]) {
                                     case "get":
                                         $flags = $this->getRegion($args[2])->getFlagsString();
-                                        $issuer->sendMessage(TF::LIGHT_PURPLE.$args[2]."'s flags:\n".$flags);
+                                        $issuer->sendMessage(TF::LIGHT_PURPLE.$args[2]."§6's flags:\n§e".$flags);
                                         break;
                                     case "set":
                                         if (!isset($args[4])) {
-                                            $issuer->sendMessage(TF::RED.'You must specify the <value> of the flag.');
+                                            $issuer->sendMessage(TF::RED.'§2You must specify the <value> of the flag.');
                                             return false;
                                         }
                                         $val = $args;
@@ -397,7 +397,7 @@ class WorldGuard extends PluginBase {
                                         if ($opt !== null) {
                                             $issuer->sendMessage($opt);
                                         } else {
-                                            $issuer->sendMessage(TF::YELLOW.'Flag has been updated successfully.');
+                                            $issuer->sendMessage(TF::YELLOW.'§dFlag has been updated successfully.');
                                         }
                                         break;
                                     case "reset":
@@ -405,19 +405,19 @@ class WorldGuard extends PluginBase {
                                         break;
                                 }
                             } else {
-                                $issuer->sendMessage(TF::RED."/region flags <get/set/reset> <region> <flag> <value>\n".TF::GRAY.'<value> argument is only needed if you are setting the flag.');
+                                $issuer->sendMessage(TF::RED."§bPlease use: §a/region flags <get/set/reset> <region> <flag> <value>\n".TF::GRAY.'<value> argument is only needed if you are setting the flag.');
                             }
                             break;
                     }
                 } else {
                     $issuer->sendMessage(implode("\n".TF::LIGHT_PURPLE, [
-                        "WorldGuard Help Page",
+                        "§6World§bGuard§cPE §dHelp Page",
                         " ",
-                        "/region create <name> - Define a new region.",
-                        "/region list - List all regions.",
-                        "/region flags get <region> - Get <region>'s flags.",
-                        "/region flags reset <region> <flag> - Reset <region>'s <flag> to default.",
-                        "/region flags set <region> <flag> <value> - Modify <value> of the <region>'s flag.",
+                        "§a/region create <name> - §bDefine a new region.",
+                        "§a/region list - §bList all regions.",
+                        "§a/region flags get <region> - §bGet <region>'s flags.",
+                        "§a/region flags reset <region> <flag> - §bReset <region>'s <flag> to default.",
+                        "§a/region flags set <region> <flag> <value> - §bModify <value> of the <region>'s flag.",
                     ]));
                 }
                 break;
