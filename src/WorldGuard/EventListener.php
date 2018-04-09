@@ -68,13 +68,13 @@ class EventListener implements Listener {
         if (isset($this->plugin->creating[$id = ($player = $event->getPlayer())->getRawUniqueId()])) {
             if ($event->getAction() === $event::RIGHT_CLICK_BLOCK) {
                 $block = $event->getBlock();
-                $player->sendMessage(TF::YELLOW.'Selected position: X'.$block->x.', Y: '.$block->y.', Z: '.$block->z.', Level: '.$block->getLevel()->getName());
+                $player->sendMessage(TF::YELLOW.'§dSelected position: X§5'.$block->x.', §dY: '.$block->y.', §5Z: '.$block->z.', §5dLevel: '.$block->getLevel()->getName());
                 $this->plugin->creating[$id][] = [$block->x, $block->y, $block->z, $block->getLevel()->getName()];
                 if (count($this->plugin->creating[$id]) >= 2) {
                     if (($reg = $this->plugin->processCreation($player)) !== false) {
-                        $player->sendMessage(TF::GREEN.'Successfully created region! Now, you can use: /rg flags <set/get> '.$reg);
+                        $player->sendMessage(TF::GREEN.'§dSuccessfully created region! Now, you can use: /rg flags <set/get> '.$reg);
                     } else {
-                        $player->sendMessage(TF::RED.'An error occurred while creating the region. Are you sure you entered the command correctly?');
+                        $player->sendMessage(TF::RED.'§cAn error occurred while creating the region. Are you sure you entered the command correctly?');
                     }
                 }
                 $event->setCancelled();
@@ -87,7 +87,7 @@ class EventListener implements Listener {
 
                 if ($reg->getFlag("use") === "false") {
                     if (in_array($event->getBlock()->getId(), self::USABLES)) {
-                        $player->sendMessage(TF::RED.'You cannot interact with '.$event->getBlock()->getName().'s.');
+                        $player->sendMessage(TF::RED.'§2You cannot interact with §3'.$event->getBlock()->getName().'s.');
                         $event->setCancelled();
                         return;
                     }
