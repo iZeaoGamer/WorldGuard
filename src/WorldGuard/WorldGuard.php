@@ -220,7 +220,7 @@ class WorldGuard extends PluginBase {
                 return false;
             }
             if (!$new->isWhitelisted($player)) {
-                if (($gm = $new->getGamemode()) !== $player->gamemode) {
+                if (($gm = $new->getGamemode()) !== $player->setGamemode) {
                     $player->setGamemode($gm);
                     if ($gm === 0 || $gm === 2) Utils::disableFlight($player);
                 }
