@@ -1,6 +1,6 @@
 name: WorldGuard
 main: worldguard\WorldGuard
-api: 3.0.0-ALPHA10
-version: 0.0.1
+api: [3.0.0-ALPHA11, 3.0.0-ALPHA12]
+version: 0.0.2
 author: Muqsit
 website: https://github.com/Muqsit/WorldGuard
