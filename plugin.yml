@@ -4,7 +4,3 @@ api: [3.0.0-ALPHA11, 3.0.0-ALPHA12]
 version: 0.0.2
 author: Muqsit
 website: https://github.com/Muqsit/WorldGuard
-commands:
-  worldguard:
-    description: WorldGuard commands.
-    aliases: ["wg", "rg"]
