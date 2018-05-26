@@ -212,6 +212,7 @@ class WorldGuard extends PluginBase {
                 return false;
             }
             if ($oldRegion->hasFlag(RegionFlags::CAN_FLY)) {
+                if($player->hasPermission("worldguard.fly.bypass")){
                 $player->setAllowFlight(false);
                 if ($player->isFlying()) {
                     $player->setFlying(false);
@@ -225,6 +226,7 @@ class WorldGuard extends PluginBase {
                 return false;
             }
             if ($newRegion->hasFlag(RegionFlags::CAN_FLY)) {
+                if($player->hasPermission("worldguard.fly.bypass")){
                 $player->setAllowFlight(false);
                 if ($player->isFlying()) {
                     $player->setFlying(false);
