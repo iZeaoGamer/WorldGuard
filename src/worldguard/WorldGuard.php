@@ -213,5 +213,6 @@ class WorldGuard extends PluginBase {
         return true;
     }
 }
+return true;
 }
 }
