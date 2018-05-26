@@ -217,7 +217,7 @@ class WorldGuard extends PluginBase {
                     $player->setFlying(false);
                 }
             }
-            $player->sendMessage("You left $oldRegion.");
+            $player->sendMessage("");
         }
         if ($newRegion !== null) {
             $newRegion = $this->getRegion($newRegion);
@@ -225,9 +225,11 @@ class WorldGuard extends PluginBase {
                 return false;
             }
             if ($newRegion->hasFlag(RegionFlags::CAN_FLY)) {
-                $player->setAllowFlight(true);
+                $player->setAllowFlight(false);
+                if ($player->isFlying()) {
+                    $player->setFlying(false);
             }
-            $player->sendMessage("You entered $newRegion.");
+            $player->sendMessage("");
         }
         return true;
     }
