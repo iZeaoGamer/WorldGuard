@@ -196,7 +196,6 @@ class WorldGuard extends PluginBase {
                     $player->setFlying(false);
                 }
             }
-            $player->sendMessage("");
         }
         if ($newRegion !== null) {
             $newRegion = $this->getRegion($newRegion);
@@ -210,7 +209,6 @@ class WorldGuard extends PluginBase {
                     $player->setFlying(false);
                 }
             }
-            $player->sendMessage("");
         }
         return true;
     }
