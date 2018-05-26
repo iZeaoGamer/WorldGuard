@@ -228,6 +228,7 @@ class WorldGuard extends PluginBase {
                 $player->setAllowFlight(false);
                 if ($player->isFlying()) {
                     $player->setFlying(false);
+                }
             }
             $player->sendMessage("");
         }
