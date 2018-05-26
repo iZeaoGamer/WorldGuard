@@ -27,7 +27,7 @@ class CommandHandler extends PluginCommand {
     public function __construct(WorldGuard $plugin)
     {
         parent::__construct("worldguard", $plugin);
-        $this->setAliases(["wg"]);
+        $this->setAliases(["wg", "rg"]);
         $this->setPermissionMessage(TF::RED."You are not authorized to use this command.");
         $this->setUsage("/worldguard help");
         $this->setPermission("worldguard.command");
