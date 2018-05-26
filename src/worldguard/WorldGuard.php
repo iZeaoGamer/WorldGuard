@@ -84,7 +84,7 @@ class WorldGuard extends PluginBase {
     public function deleteRegion(string $region) : bool
     {
         if (isset($this->regions[$region = strtolower($region)])) {
-            $this->removeFromCache($region);
+            $this->regionCache($region);
             unset($this->regions[$region]);
             return true;
         }
