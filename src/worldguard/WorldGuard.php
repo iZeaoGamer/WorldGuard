@@ -1,41 +1,31 @@
 <?php
 namespace worldguard;
-
 use pocketmine\level\{Level, Position};
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
-
 use worldguard\region\{Region, RegionFlags};
-
 class WorldGuard extends PluginBase {
-
     /** @var Region[] */
     private $regions = [];
-
     /** @var string[] */
     private $regionCache = [];//for faster region checking.
-
     /** @var array */
     private $players = [];//realtime player regions
-
     public function onLoad() : void
     {
         $this->saveResource("regions.yml");
         $this->loadRegions($this->getDataFolder()."regions.yml");
     }
-
     public function onEnable() : void
     {
         $this->getServer()->getCommandMap()->register("WorldGuard", new CommandHandler($this), "worldguard");
         new EventListener($this, $this->players);
     }
-
     public function onDisable() : void
     {
         $this->saveRegions($this->getDataFolder()."regions.yml");
     }
-
     /**
      * Loads regions from YAML file.
      */
@@ -60,7 +50,6 @@ class WorldGuard extends PluginBase {
         }
         throw new \Error("Could not read file ".basename($file).", invalid format.");
     }
-
     /**
      * Creates a new region.
      *
@@ -76,7 +65,6 @@ class WorldGuard extends PluginBase {
         $this->cacheRegion($region = $this->regions[$name = strtolower($name)] = new Region($name, $pos1, $pos2, $level->getName()));
         return $region;
     }
-
     /**
      * Saves regions to YAML file.
      */
@@ -88,7 +76,6 @@ class WorldGuard extends PluginBase {
         }
         yaml_emit_file($file, $regions);
     }
-
     /**
      * Deletes a region
      *
@@ -103,7 +90,6 @@ class WorldGuard extends PluginBase {
         }
         return false;
     }
-
     /**
      * Returns all loaded regions.
      *
@@ -113,7 +99,6 @@ class WorldGuard extends PluginBase {
     {
         return $this->regions;
     }
-
     /**
      * Returns a region by name.
      *
@@ -123,7 +108,6 @@ class WorldGuard extends PluginBase {
     {
         return $this->regions[strtolower($region)] ?? null;
     }
-
     /**
      * Returns region at Position.
      *
@@ -145,12 +129,10 @@ class WorldGuard extends PluginBase {
         }
         return null;
     }
-
     public function regionsExistInChunk(int $chunkX, int $chunkZ, string $level) : bool
     {
         return !empty($this->regionCache[$level.":".$chunkX.":".$chunkZ]);
     }
-
     /**
      * Caches a region for faster checking.
      */
@@ -158,7 +140,6 @@ class WorldGuard extends PluginBase {
     {
         $regionName = $region->getName();
         $level = $region->getLevelname();
-
         [$posMin, $posMax] = $region->getPositions();
         $posMin->x >>= 4;
         $posMin->y >>= 4;
@@ -166,7 +147,6 @@ class WorldGuard extends PluginBase {
         $posMax->x >>= 4;
         $posMax->y >>= 4;
         $posMax->z >>= 4;
-
         for ($chunkX = $posMin->x; $chunkX <= $posMax->x; ++$chunkX) {
             for ($chunkZ = $posMin->z; $chunkZ <= $posMax->z; ++$chunkZ) {
                 for ($chunkY = $posMin->y; $chunkY <= $posMax->y; ++$chunkY) {
@@ -181,7 +161,6 @@ class WorldGuard extends PluginBase {
             }
         }
     }
-
     /**
      * Caches all regions of a specific level.
      */
@@ -195,7 +174,6 @@ class WorldGuard extends PluginBase {
             $this->getLogger()->notice("Found and loaded ".count($regionList)." from level '".$level."'");
         }
     }
-
     /**
      * Called when player enters another region.
      *
@@ -236,4 +214,6 @@ class WorldGuard extends PluginBase {
         }
         return true;
     }
+}
+}
 }
