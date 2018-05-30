@@ -1,5 +1,6 @@
 <?php
 namespace worldguard;
+use pocketmine\command\{CommandSender, Command};
 use pocketmine\level\{Level, Position};
 use pocketmine\math\Vector3;
 use pocketmine\Player;
