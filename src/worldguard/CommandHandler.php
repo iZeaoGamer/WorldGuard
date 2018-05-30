@@ -29,6 +29,7 @@ class CommandHandler {
     }
 
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
+        if ($sender instanceof Player) {
      if (strtolower($command->getName()) === "worldguard") {
                 if (empty($args)) {
                     $sender->sendMessage("§bPlease use §3/$label help §bfor a list of commands.");
