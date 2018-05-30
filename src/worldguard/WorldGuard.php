@@ -17,14 +17,16 @@ class WorldGuard extends PluginBase {
         $this->saveResource("regions.yml");
         $this->loadRegions($this->getDataFolder()."regions.yml");
     }
-    public function onEnable() : void
-    {
-        $this->getServer()->getCommandMap()->register("WorldGuard", new CommandHandler($this), "worldguard");
+    public function onEnable() : void{
+         $this->ch = new CommandHandler($this);
         new EventListener($this, $this->players);
     }
     public function onDisable() : void
     {
         $this->saveRegions($this->getDataFolder()."regions.yml");
+    }
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args) :bool {
+        return $this->ch->onCommand($sender, $command, $label, $args);
     }
     /**
      * Loads regions from YAML file.
