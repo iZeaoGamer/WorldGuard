@@ -151,6 +151,7 @@ class CommandHandler {
              }
      }
     }
+    }
     private function setPosition(Player $player, int $pos) : void{
         --$pos;
         $player->sendMessage(TF::LIGHT_PURPLE.($pos === 0 ? "First" : "Second")." position set to (".$player->x.", ".$player->y.", ".$player->z.", ".$player->level->getName().")");
