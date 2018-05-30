@@ -35,14 +35,16 @@ class CommandHandler extends PluginCommand {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        switch ($args[0] ?? null) {
-            case "pos1":
+             if ($args[0] == "pos1") {
+                if($sender->isOp()){
                 $this->setPosition($sender, 1);
                 return;
-            case "pos2":
+             if ($args[0] == "pos2") {
+                if($sender->isOp()){
                 $this->setPosition($sender, 2);
                 return;
-            case "create":
+             if ($args[0] == "create") {
+                if($sender->isOp()){
                 if (!isset($this->creator[$k = $sender->getId()]) || count($this->creator[$k]) !== 2) {
                     $sender->sendMessage(TF::RED."Please select two points using /$commandLabel pos1 and /$commandLabel pos2 before creating a new region.");
                     return;
@@ -70,7 +72,8 @@ class CommandHandler extends PluginCommand {
                 }
                 $sender->sendMessage($message);
                 return;
-            case "delete":
+             if ($args[0] == "delete") {
+                if($sender->isOp()){
                 if (!isset($args[1])) {
                     $sender->sendMessage(TF::RED."Usage: ".str_replace("{CMD}", $commandLabel, self::HELP_MESSAGE["delete"]));
                     return;
@@ -81,7 +84,8 @@ class CommandHandler extends PluginCommand {
                     $sender->sendMessage(TF::RED."Region '".$args[1]."' does not exist.");
                 }
                 return;
-            case "setflag":
+             if ($args[0] == "setflag") {
+                if($sender->isOp()){
                 if (!isset($args[1])) {
                     $sender->sendMessage(TF::RED."Usage: ".str_replace("{CMD}", $commandLabel, self::HELP_MESSAGE["setflag"]));
                     return;
@@ -129,15 +133,24 @@ class CommandHandler extends PluginCommand {
                     $sender->sendMessage(TF::RED."Invalid argument '".$args[3]."', you can set a flag to either 'true' or 'false'.");
                 }
                 return;
-            case "help":
-            default:
+             if ($args[0] == "help") {
+                if($sender->isOp()){
                 $sender->sendMessage(implode("\n", str_replace("{CMD}", $commandLabel, self::HELP_MESSAGE)));
-                return;
-        }
+                return true;
+                }
+             }
     }
-
-    private function setPosition(Player $player, int $pos) : void
-    {
+             }
+                }
+             }
+                }
+             }
+                }
+             }
+                }
+             }
+    }
+    private function setPosition(Player $player, int $pos) : void{
         --$pos;
         $player->sendMessage(TF::LIGHT_PURPLE.($pos === 0 ? "First" : "Second")." position set to (".$player->x.", ".$player->y.", ".$player->z.", ".$player->level->getName().")");
         if (!isset($this->creator[$k = $player->getId()])) {
