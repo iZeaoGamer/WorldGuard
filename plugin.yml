@@ -8,6 +8,7 @@ commands:
   worldguard:
   aliases: ["rg", "wg", "region"]
   description: WorldGuard command.
+  permission: worldguard.command
   
 permissions:
   worldguard.command:
