@@ -203,8 +203,9 @@ class EventListener implements Listener {
         }
         $position = new Position($x,$block->y,$z,$block->getLevel());
         if (($region = $this->plugin->getRegionFromPosition($position)) !== ""){
-            if(!$event->getPlayer()->hasPermission("worldguard.place." . $region->getName())){
-                    $player->sendMessage(TF::RED. $this->plugin->messages["denied-block-place"]);
+          //  if(!$event->getPlayer()->hasPermission("worldguard.place." . $region->getName())){
+             if ($region->getFlag("place") === "false"){
+		$player->sendMessage(TF::RED. $this->plugin->messages["denied-block-place"]);
                     $event->setCancelled();
             }
          }
@@ -228,8 +229,9 @@ class EventListener implements Listener {
         }
         $position = new Position($x,$block->y,$z,$block->getLevel());
         if (($region = $this->plugin->getRegionFromPosition($position)) !== ""){
-            if(!$event->getPlayer()->hasPermission("worldguard.break." . $region->getName())){
-                    $player->sendMessage(TF::RED. $this->plugin->messages["denied-block-break"]);
+         //   if(!$event->getPlayer()->hasPermission("worldguard.break." . $region->getName())){
+           if ($region->getFlag("break") === "false"){
+		$player->sendMessage(TF::RED. $this->plugin->messages["denied-block-break"]);
                     $event->setCancelled();
             }
          }
