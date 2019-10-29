@@ -36,6 +36,8 @@ class WorldGuard extends PluginBase {
 
     const FLAGS = [
         "pvp" => "true",
+	"break" => "true",
+	"place" => "true",
         "effects" => [],
         "blocked-cmds" => [],
         "allowed-cmds" => [],
